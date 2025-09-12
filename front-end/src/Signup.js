@@ -1,35 +1,80 @@
-import React from 'react';
-import './Signup.css';
+import React, { useState } from "react";
+import axios from "axios";
+import "./Signup.css";
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:5000/api/signup", {
+        email,
+        password,
+        role,
+      });
+      toast.success(res.data.message, { position: "top-center" });
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Signup failed", {
+        position: "top-center",
+      });
+    }
+  };
+
   return (
     <div className="signup-bg">
       <div className="signup-card">
         <h2>Create Account</h2>
-        <form className="signup-form">
+        <form className="signup-form" onSubmit={handleSubmit}>
           <label>Email</label>
-          <input type="email" placeholder="Enter your email" />
+          <input
+            type="email"
+            value={email}
+            placeholder="Enter your email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <label>Password</label>
-          <input type="password" placeholder="Enter your password" />
-
-          <label>Confirm Password</label>
-          <input type="password" placeholder="Confirm your password" />
+          <input
+            type="password"
+            value={password}
+            placeholder="Create a password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
           <label>Select Role</label>
           <div className="role-buttons">
-            <button type="button">Service Provider</button>
-            <button type="button">Customer</button>
+            <button
+              type="button"
+              className={role === "Service Provider" ? "active-role" : ""}
+              onClick={() => setRole("Service Provider")}
+            >
+              Service Provider
+            </button>
+            <button
+              type="button"
+              className={role === "Customer" ? "active-role" : ""}
+              onClick={() => setRole("Customer")}
+            >
+              Customer
+            </button>
           </div>
 
           <button type="submit" className="submit-btn">Sign Up</button>
         </form>
-        <p className="signin-text">
-          Already have an account? <a href="/login">Sign in</a>
+
+        <p className="switch-text">
+          Already have an account? <Link to="/login">Log in</Link>
         </p>
       </div>
+      <ToastContainer />
     </div>
-  )
-}
+  );
+};
 
 export default Signup;

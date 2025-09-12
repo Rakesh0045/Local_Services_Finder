@@ -128,6 +128,14 @@ body {
   transform: translateY(1px);
 }
 
+/* Selected role highlight */
+.role-buttons button.selected {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
+}
+
 /* Submit button */
 .submit-btn {
   width: 100%;
@@ -177,4 +185,38 @@ body {
   .signup-form {
     max-width: 100%;
   }
+}
+
+/* Switch between login/signup */
+.switch-text {
+  font-size: 0.9rem;
+  margin-top: 1.2rem;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.switch-text a {
+  color: var(--secondary-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.switch-text a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* Highlight selected role button */
+.active-role {
+  border-color: var(--primary-color);
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.role-buttons button.active-role {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
 }
