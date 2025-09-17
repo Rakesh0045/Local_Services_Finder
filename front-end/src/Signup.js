@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
@@ -19,11 +20,18 @@ const Signup = () => {
         role,
       });
       toast.success(res.data.message, { position: "top-center" });
+
+      if (role === "Service Provider") {
+        navigate("/profile-setup"); // redirect to profile setup
+      } else {
+        navigate("/login"); // customers go directly to login
+      }
     } catch (err) {
       toast.error(err.response?.data?.message || "Signup failed", {
         position: "top-center",
       });
     }
+
   };
 
   return (
